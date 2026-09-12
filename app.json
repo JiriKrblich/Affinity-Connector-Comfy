@@ -1,0 +1,83 @@
+{
+  "id": "comfyui",
+  "name": "ComfyUI",
+  "description": "Runs one of your own ComfyUI workflows on what is in the document, and brings the result back to where it came from. Nothing leaves this machine.",
+  "version": "1.0.4",
+  "testedWith": "Affinity 3.2.3 · Connector for Affinity 1.0.0",
+  "author": "jirikrblich",
+  "bar": { "icon": "cpu" },
+  "image": "docs/header.jpg",
+  "url": "https://jirikrblich.netlify.app",
+  "homepage": "https://docs.comfy.org/development/comfyui-server/comms_routes",
+  "runLabel": "Run the workflow",
+  "main": "index.js",
+  "timeoutSec": 1800,
+  "settings": [
+    {
+      "key": "address",
+      "type": "text",
+      "label": "ComfyUI address",
+      "default": "http://127.0.0.1:8188",
+      "help": "Where ComfyUI is listening. The default is what it uses when you start it yourself."
+    },
+    {
+      "key": "workflows",
+      "type": "folder",
+      "label": "Workflows folder",
+      "help": "A folder of workflows saved from ComfyUI with Workflow, Export (API). The ordinary Save writes a different shape that the server will not take."
+    }
+  ],
+  "fields": [
+    {
+      "key": "workflow",
+      "type": "select",
+      "label": "Workflow",
+      "optionsFrom": "workflows",
+      "help": "Whatever is in your workflows folder."
+    },
+    {
+      "key": "prompt",
+      "type": "textarea",
+      "label": "Prompt",
+      "placeholder": "Leave empty to run the workflow exactly as it was saved",
+      "help": "Goes into whichever text node the sampler treats as positive. Title a node “prompt” in ComfyUI to choose a different one."
+    },
+    {
+      "key": "negative",
+      "type": "textarea",
+      "label": "Negative prompt",
+      "advanced": true
+    },
+    {
+      "key": "image",
+      "type": "image",
+      "label": "Send",
+      "source": "selection",
+      "sources": [
+        "selection",
+        "lasso",
+        "area",
+        "native",
+        "artboard",
+        "spread",
+        "layer",
+        "document",
+        "file"
+      ],
+      "help": "Only used when the workflow loads an image. It is uploaded to ComfyUI and put in place of whatever that node was pointing at."
+    },
+    {
+      "key": "seed",
+      "type": "text",
+      "label": "Seed",
+      "placeholder": "Leave empty for a different one every time",
+      "advanced": true
+    },
+    {
+      "key": "place",
+      "type": "checkbox",
+      "label": "Put the result back in the document",
+      "default": true
+    }
+  ]
+}
